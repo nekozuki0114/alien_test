@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="./meguru.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+  <title>SkyWayチュートリアル</title>
+</head>
+<body>
+    <!-- <div id='megurucube'>
+        <div class='meguruboxBase'>
+            <div class='megurusquare megurutop'> <div class= 'megurusquare2'></div> </div>
+            <div class='megurusquare megurubottom'> <div class= 'megurusquare2'></div> </div>
+            <div class='megurusquare megurufront'> <div class= 'megurusquare2'></div> </div>
+            <div class='megurusquare meguruback'> <div class= 'megurusquare2'></div> </div>
+            <div class='megurusquare meguruleft'> <div class= 'megurusquare2'></div> </div>
+            <div class='megurusquare megururight'> <div class= 'megurusquare2'></div> </div>
+        </div>
+    </div> -->
+    <div class="container">
+        <h1 class="heading">Room example</h1>
+        <p class="note">
+          Change Room mode (before join in a room):
+          <a href="#">mesh</a> / <a href="#sfu">sfu</a>
+        </p>
+        <div class="room">
+          <div>
+            <div id="container">  <!-- video の上に canvas をオーバーレイするための div 要素 -->
+            <video id="js-local-stream" width="400" height="300"></video>
+            <canvas id="canvas" width="400" height="300"></canvas> 
+            </div>
+            <div id="dat"></div>  <!-- データ表示用 div 要素 -->
+            <span id="js-room-mode"></span>:
+            <input type="text" placeholder="Room Name" id="js-room-id">
+            <button id="js-join-trigger">Join</button>
+            <button id="js-leave-trigger">Leave</button>
+
+            <div class="remote-streams" id="js-remote-streams"></div>
+
+            <div>
+                <pre class="messages" id="js-messages"></pre>
+                <input type="text" id="js-local-text">
+                <button id="js-send-trigger">Send</button>
+            </div>
+          </div>
+        </div>
+        <p class="meta" id="js-meta"></p>
+      </div>
+</body>
+<script src="./skyway.js"></script>
+<script src="./key.js"></script>
+<!-- clmtrackr 関連ファイルの読み込み -->
+<script src="face/clmtrackr.js"></script>          <!-- clmtrackr のメインライブラリの読み込み -->
+<script src="face/model_pca_20_svm_emotion.js"></script>   <!-- 顔モデル（※1）の読み込み -->
+<script src="face/emotionClassifier.js"></script>  <!-- 感情を分類する外部関数の読み込み -->
+<script src="face/emotionModel.js"></script>       <!-- 感情モデル（※2）の読み込み -->
+ <script src="./face.js"></script>
+</html>
+
+
+
+
+
