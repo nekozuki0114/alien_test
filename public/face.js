@@ -19,7 +19,8 @@ var media = navigator.mediaDevices.getUserMedia({       // メディアデバイ
   audio: false                                          // マイクの音声は使わない
 });
 media.then((stream) => {                                // メディアデバイスが取得できたら
-  video.src = window.URL.createObjectURL(stream);       // video 要素にストリームを渡す
+  video.srcObject = stream;
+  //video.src = window.URL.createObjectURL(stream);       // video 要素にストリームを渡す
 });
 
 // clmtrackr の開始
