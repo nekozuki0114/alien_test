@@ -15,6 +15,7 @@ const Peer = window.Peer;
   let canvas = null;
   while(canvas == null){
   canvas = document.getElementById("canvas").captureStream(30);
+  console.log("est");
   }
 
   meta.innerText = `
