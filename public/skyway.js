@@ -32,10 +32,7 @@ const Peer = window.Peer;
   );
 
   //const localStream = await navigator.mediaDevices
-  video.setAttribute('autoplay', '');
-  video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
-  
+
   let localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: true,
