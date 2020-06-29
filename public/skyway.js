@@ -14,7 +14,7 @@ const Peer = window.Peer;
   const sdkSrc = document.querySelector('script[src*=skyway]');
   let canvas = null;
   while(canvas == null){
-  canvas = document.getElementById("canvas").captureStream(30);
+  canvas = document.getElementById("canvas2").captureStream(30);
   console.log("est");
   }
 
