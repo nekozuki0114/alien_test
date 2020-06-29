@@ -37,7 +37,7 @@ const Peer = window.Peer;
       audio: true,
       video: true,
     })
-    .catch(console.error);
+    .catch(alert(console.error);
 
   // Render local stream
   localVideo.muted = true;
