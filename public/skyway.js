@@ -43,7 +43,7 @@ const Peer = window.Peer;
   localVideo.muted = true;
   localVideo.srcObject = localStream;
   localVideo.playsInline = true;
-  await localVideo.play().catch(console.error);
+  await localVideo.play().catch(alert(console.error));
 
   // eslint-disable-next-line require-atomic-updates
   const peer = (window.peer = new Peer({
