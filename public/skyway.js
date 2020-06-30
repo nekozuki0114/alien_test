@@ -13,7 +13,7 @@ const Peer = window.Peer;
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
   let canvas = null;
-  let localstream = null;
+  let localStream = null;
   while(canvas == null){
   canvas = document.getElementById("canvas2").captureStream(30);
   console.log("est");
