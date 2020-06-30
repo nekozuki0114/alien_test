@@ -33,6 +33,7 @@ const Peer = window.Peer;
   );
   
   // カメラ映像取得
+if (navigator.mediaDevices) {
   navigator.mediaDevices.getUserMedia({video: {facingMode: "user",width: 640,height: 480}, audio: true})
     .then( stream => {
     // 成功時にvideo要素にカメラ映像をセットし、再生
@@ -46,6 +47,10 @@ const Peer = window.Peer;
     console.error('mediaDevice.getUserMedia() error:', error);
     return;
   });
+} else {
+  alert('ビデオカメラを使用できません');
+}
+
 
   // eslint-disable-next-line require-atomic-updates
   const peer = (window.peer = new Peer({
