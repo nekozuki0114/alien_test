@@ -33,11 +33,12 @@ const Peer = window.Peer;
 
   //const localStream = await navigator.mediaDevices
 
-  let localStream = await navigator.mediaDevices
+  const localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: true,
       video: true,
     })
+
     .catch(alert(console.error));
 
   // Render local stream
