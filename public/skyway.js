@@ -33,7 +33,7 @@ const Peer = window.Peer;
   );
   
   // カメラ映像取得
-  navigator.mediaDevices.getUserMedia({video: {facingMode: "user"}, audio: true})
+  navigator.mediaDevices.getUserMedia({video: {facingMode: "user",width: 640,height: 480}, audio: true})
     .then( stream => {
     // 成功時にvideo要素にカメラ映像をセットし、再生
     const videoElm = document.getElementById('js-local-stream')
