@@ -44,7 +44,7 @@ const Peer = window.Peer;
   let localStream = await navigator.mediaDevices.getUserMedia(constraints)
   .then(function(stream) {
     var video = document.querySelector('video');
-    video.srcObject = stream
+    video.srcObject =localStream
     video.onloadedmetadata = function(e) {
       video.play();
     };
