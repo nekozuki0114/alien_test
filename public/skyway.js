@@ -32,15 +32,25 @@ const Peer = window.Peer;
   );
 
   //const localStream = await navigator.mediaDevices
+  const constraints = { audio: true, video: true};
 
-  const localStream = await navigator.mediaDevices
-    .getUserMedia({
-      audio: true,
-      video: true,
-    })
+  // const localStream = await navigator.mediaDevices
+  //   .getUserMedia({
+  //     audio: true,
+  //     video: true,
+  //   })
 
-    .catch(alert(console.error));
-
+  //   .catch(alert(console.error));
+  const localStream = navigator.mediaDevices.getUserMedia(constraints)
+  .then(function(stream) {
+    var video = document.querySelector('video');
+    video.srcObject = stream
+    video.onloadedmetadata = function(e) {
+      video.play();
+    };
+  })
+  .catch(function(err) {
+    console.log(err.name + ": " + err.message)});
   // Render local stream
   localVideo.muted = true;
   localVideo.srcObject = localStream;
