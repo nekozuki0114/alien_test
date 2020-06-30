@@ -37,9 +37,9 @@ if (navigator.mediaDevices) {
   navigator.mediaDevices.getUserMedia({video: {facingMode: "user",width: 640,height: 480}, audio: true})
     .then( stream => {
     // 成功時にvideo要素にカメラ映像をセットし、再生
-    const videoElm = document.getElementById('js-local-stream')
+    const videoElm = document.getElementById('js-local-stream').error(alert('エレメント取得でエラー'));
     videoElm.srcObject = stream;
-    //videoElm.play().error(alert('エラー'));
+    videoElm.play().error(alert('ビデオpleyでエラー'));
     // 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
     localStream = stream;
   }).catch( error => {
