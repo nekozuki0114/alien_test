@@ -41,7 +41,7 @@ const Peer = window.Peer;
   //   })
 
   //   .catch(alert(console.error));
-  const localStream = navigator.mediaDevices.getUserMedia(constraints)
+  let localStream = navigator.mediaDevices.getUserMedia(constraints)
   .then(function(stream) {
     var video = document.querySelector('video');
     video.srcObject = stream
