@@ -39,7 +39,7 @@ if (navigator.mediaDevices) {
     // 成功時にvideo要素にカメラ映像をセットし、再生
     const videoElm = document.getElementById('js-local-stream')
     videoElm.srcObject = stream;
-    videoElm.play().error("error");
+    videoElm.play().error(alert('エラー'));
     // 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
     localStream = stream;
   }).catch( error => {
