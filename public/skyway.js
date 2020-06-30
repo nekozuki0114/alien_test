@@ -13,6 +13,7 @@ const Peer = window.Peer;
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
   let canvas = null;
+  let localstream = null;
   while(canvas == null){
   canvas = document.getElementById("canvas2").captureStream(30);
   console.log("est");
@@ -30,9 +31,9 @@ const Peer = window.Peer;
     'hashchange',
     () => (roomMode.textContent = getRoomModeByHash())
   );
-
+  
   //const localStream = await navigator.mediaDevices
-  const localStream = await navigator.mediaDevices
+   localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: true,
       video: true,
