@@ -14,7 +14,7 @@ element.id = 'canvas2'
 
 // -- camera ---------------------------------------------------------------------------------------
 const camera = new THREE.PerspectiveCamera( 30.0, width / height, 0.01, 20.0 );
-camera.position.set( 0.0, 0.0, 5.0 );
+camera.position.set( 0.0, 0.0, 3.0 );
 
 // -- scene ----------------------------------------------------------------------------------------
 const scene = new THREE.Scene();
