@@ -1,5 +1,8 @@
 <video id="player" autoplay></video>
  <script>
+let player = document.getElementById('player');
+let width = snapshotCanvas.width;
+let height = snapshotCanvas.height;
  let handleSuccess = function(stream) {
     // カメラストリームをプレイヤーのデータに設定
     player.srcObject = stream;
