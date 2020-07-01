@@ -1,76 +1,157 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Camera Test</title>
-  <style>
-  canvas, video{
-    border: 1px solid gray;
-  }
-  </style>
-</head>
-<body>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SkyWay - Room example</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="heading">Room example</h1>
+      <p class="note">
+        Change Room mode (before join in a room):
+        <a href="#">mesh</a> / <a href="#sfu">sfu</a>
+      </p>
+      <div class="room">
+        <div>
+          <video id="js-local-stream"></video>
+          <span id="js-room-mode">mesh</span>:
+          <input type="text" placeholder="Room Name" id="js-room-id">
+          <button id="js-join-trigger">Join</button>
+          <button id="js-leave-trigger">Leave</button>
+        </div>
 
-<h1>HTML5カメラ</h1>
+        <div class="remote-streams" id="js-remote-streams"></div>
 
-<video id="camera" width="300" height="200"></video>
-<canvas id="picture" width="300" height="200"></canvas>
-<form>
-  <button type="button" id="shutter">シャッター</button>
-</form>
+        <div>
+          <pre class="messages" id="js-messages"></pre>
+          <input type="text" id="js-local-text">
+          <button id="js-send-trigger">Send</button>
+        </div>
+      </div>
+      <p class="meta" id="js-meta">UA: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0<br>    SDK: https://cdn.webrtc.ecl.ntt.com/skyway-latest.js</p>
+	</div>
+	<script src="//cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+	<script>
+	window.__SKYWAY_KEY__ = '2b3e52c6-e178-4847-b841-c83fa546b5af';
+	const Peer = window.Peer;
 
-<audio id="se" preload="auto">
-  <source src="camera-shutter1.mp3" type="audio/mp3">
-</audio>
-
-<script>
-window.onload = () => {
-  const video  = document.querySelector("#camera");
-  const canvas = document.querySelector("#picture");
-  const se     = document.querySelector('#se');
-
-  /** カメラ設定 */
-  const constraints = {
-    audio: false,
-    video: {
-      width: 300,
-      height: 200,
-      facingMode: "user"   // フロントカメラを利用する
-      // facingMode: { exact: "environment" }  // リアカメラを利用する場合
-    }
-  };
-
-  /**
-   * カメラを<video>と同期
-   */
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then( (stream) => {
-    video.srcObject = stream;
-    video.onloadedmetadata = (e) => {
-      video.play();
-    };
-  })
-  .catch( (err) => {
-    console.log(err.name + ": " + err.message);
-  });
-
-  /**
-   * シャッターボタン
-   */
-   document.querySelector("#shutter").addEventListener("click", () => {
-    const ctx = canvas.getContext("2d");
-
-    // 演出的な目的で一度映像を止めてSEを再生する
-    video.pause();  // 映像を停止
-    se.play();      // シャッター音
-    setTimeout( () => {
-      video.play();    // 0.5秒後にカメラ再開
-    }, 500);
-
-    // canvasに画像を貼り付ける
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  });
-};
-</script>
+		(async function main() {
+		  const localVideo = document.getElementById('js-local-stream');
+		  const joinTrigger = document.getElementById('js-join-trigger');
+		  const leaveTrigger = document.getElementById('js-leave-trigger');
+		  const remoteVideos = document.getElementById('js-remote-streams');
+		  const roomId = document.getElementById('js-room-id');
+		  const roomMode = document.getElementById('js-room-mode');
+		  const localText = document.getElementById('js-local-text');
+		  const sendTrigger = document.getElementById('js-send-trigger');
+		  const messages = document.getElementById('js-messages');
+		  const meta = document.getElementById('js-meta');
+		  const sdkSrc = document.querySelector('script[src*=skyway]');
+		
+		  meta.innerText = `
+			UA: ${navigator.userAgent}
+			SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
+		  `.trim();
+		
+		  const getRoomModeByHash = () => (location.hash === '#sfu' ? 'sfu' : 'mesh');
+		
+		  roomMode.textContent = getRoomModeByHash();
+		  window.addEventListener(
+			'hashchange',
+			() => (roomMode.textContent = getRoomModeByHash())
+		  );
+		
+		  const localStream = await navigator.mediaDevices
+			.getUserMedia({
+			  audio: true,
+			  video: true,
+			})
+			.catch(console.error);
+		
+		  // Render local stream
+		  localVideo.muted = true;
+		  localVideo.srcObject = localStream;
+		  localVideo.playsInline = true;
+		  await localVideo.play().catch(console.error);
+		
+		  // eslint-disable-next-line require-atomic-updates
+		  const peer = (window.peer = new Peer({
+			key: window.__SKYWAY_KEY__,
+			debug: 3,
+		  }));
+		
+		  // Register join handler
+		  joinTrigger.addEventListener('click', () => {
+			// Note that you need to ensure the peer has connected to signaling server
+			// before using methods of peer instance.
+			if (!peer.open) {
+			  return;
+			}
+		
+			const room = peer.joinRoom(roomId.value, {
+			  mode: getRoomModeByHash(),
+			  stream: localStream,
+			});
+		
+			room.once('open', () => {
+			  messages.textContent += '=== You joined ===\n';
+			});
+			room.on('peerJoin', peerId => {
+			  messages.textContent += `=== ${peerId} joined ===\n`;
+			});
+		
+			// Render remote stream for new peer join in the room
+			room.on('stream', async stream => {
+			  const newVideo = document.createElement('video');
+			  newVideo.srcObject = stream;
+			  newVideo.playsInline = true;
+			  // mark peerId to find it later at peerLeave event
+			  newVideo.setAttribute('data-peer-id', stream.peerId);
+			  remoteVideos.append(newVideo);
+			  await newVideo.play().catch(console.error);
+			});
+		
+			room.on('data', ({ data, src }) => {
+			  // Show a message sent to the room and who sent
+			  messages.textContent += `${src}: ${data}\n`;
+			});
+		
+			// for closing room members
+			room.on('peerLeave', peerId => {
+			  const remoteVideo = remoteVideos.querySelector(
+				`[data-peer-id=${peerId}]`
+			  );
+			  remoteVideo.srcObject.getTracks().forEach(track => track.stop());
+			  remoteVideo.srcObject = null;
+			  remoteVideo.remove();
+		
+			  messages.textContent += `=== ${peerId} left ===\n`;
+			});
+		
+			// for closing myself
+			room.once('close', () => {
+			  sendTrigger.removeEventListener('click', onClickSend);
+			  messages.textContent += '== You left ===\n';
+			  Array.from(remoteVideos.children).forEach(remoteVideo => {
+				remoteVideo.srcObject.getTracks().forEach(track => track.stop());
+				remoteVideo.srcObject = null;
+				remoteVideo.remove();
+			  });
+			});
+		
+			sendTrigger.addEventListener('click', onClickSend);
+			leaveTrigger.addEventListener('click', () => room.close(), { once: true });
+		
+			function onClickSend() {
+			  // Send message to all of the peers in the room via websocket
+			  room.send(localText.value);
+		
+			  messages.textContent += `${peer.id}: ${localText.value}\n`;
+			  localText.value = '';
+			}
+		  });
+		
+		  peer.on('error', console.error);
+		})();</script>
 </body>
 </html>
