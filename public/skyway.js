@@ -68,8 +68,8 @@ if (navigator.mediaDevices) {
 
     const room = peer.joinRoom(roomId.value, {
       mode: getRoomModeByHash(),
-      stream: localStream,
-      //stream: canvas,
+      //stream: localStream,
+      stream: canvas,
     });
 
     room.once('open', () => {

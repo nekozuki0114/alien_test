@@ -104,7 +104,7 @@ renderer.domElement.addEventListener( 'mousemove', ( event ) => { // マウス�
 } );
 
 // -- face recognition -----------------------------------------------------------------------------
-const jeelizCanvas = document.createElement( 'canvas' ); // jeeliz用のキャンバスを生成
+const jeelizCanvas = document.createElement( 'jeeliz' ); // jeeliz用のキャンバスを生成
 
 function handleJeelizReady( error, spec ) { // jeelizの初期化処理が終わった際の処理
   if ( error ) { console.error( error ); return; } // エラーが有った場合、エラーを出力
