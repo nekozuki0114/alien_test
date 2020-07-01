@@ -59,10 +59,9 @@ const Peer = window.Peer;
       return;
     }
 
-
+      //stream: localStream,
     const room = peer.joinRoom(roomId.value, {
       mode: getRoomModeByHash(),
-      //stream: localStream,
       stream: canvas,
     });
 
@@ -82,7 +81,7 @@ const Peer = window.Peer;
       // mark peerId to find it later at peerLeave event
       newVideo.setAttribute('data-peer-id', stream.peerId);
       remoteVideos.append(newVideo);
-      await newVideo.play().catch(alert(console.error()));
+      await newVideo.play().catch(onsole.error());
     });
 
     room.on('data', ({ data, src }) => {
