@@ -15,7 +15,7 @@ const Peer = window.Peer;
   let canvas = null;
   let localStream = null;
   while(canvas == null){
-  canvas = document.getElementById("canvas2").captureStream(30);
+  canvas = document.getElementById("canvas2").captureStream();
   console.log("est");
   }
 
@@ -34,7 +34,7 @@ const Peer = window.Peer;
   
   // カメラ映像取得
 if (navigator.mediaDevices) {
-  navigator.mediaDevices.getUserMedia({video: {facingMode: "user",width: 640,height: 480}, audio: true})
+  navigator.mediaDevices.getUserMedia({video: {facingMode: "user"}, audio: true})
     .then( stream => {
     // 成功時にvideo要素にカメラ映像をセットし、再生
     const videoElm = document.getElementById('stream');
