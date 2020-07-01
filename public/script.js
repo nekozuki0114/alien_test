@@ -12,6 +12,8 @@ const Peer = window.Peer;
   const messages = document.getElementById('js-messages');
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
+  let canvas1 = document.getElementById("canvas1");
+  let context = canvas1.getContext("2d");                  // canvas の context の取得
   let canvas = null;
   while(canvas == null){
   canvas = document.getElementById("canvas2").captureStream(3);
@@ -122,4 +124,32 @@ const Peer = window.Peer;
   });
 
   peer.on('error', console.error);
+
+  // clmtrackr の開始
+var tracker = new clm.tracker();  // tracker オブジェクトを作成
+tracker.init(pModel);             // tracker を所定のフェイスモデル（※）で初期化
+tracker.start(localVideo);             // video 要素内でフェイストラッキング開始
+ 
+// 描画ループ
+function drawLoop() {
+  requestAnimationFrame(drawLoop);                      // drawLoop 関数を繰り返し実行
+  var positions = tracker.getCurrentPosition();         // 顔部品の現在位置の取得
+  showData(positions);                                  // データの表示
+  context.clearRect(0, 0, canvas1.width, canvas1.height); // canvas をクリア
+  tracker.draw(canvas1);                                 // canvas にトラッキング結果を描画
+}
+drawLoop();                                             // drawLoop 関数をトリガー
+
+
+// 顔部品（特徴点）の位置データを表示する showData 関数
+function showData(pos) {
+  var str = "";                                         // データの文字列を入れる変数
+  for(var i = 0; i < pos.length; i++) {                 // 全ての特徴点（71個）について
+    str += "特徴点" + i + ": ("
+         + Math.round(pos[i][0]) + ", "                 // X座標（四捨五入して整数に）
+         + Math.round(pos[i][1]) + ")<br>";             // Y座標（四捨五入して整数に）
+  }
+  var dat = document.getElementById("dat");             // データ表示用div要素の取得
+  dat.innerHTML = str;                                  // データ文字列の表示
+}
 })();

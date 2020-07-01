@@ -13,9 +13,7 @@ element.id = 'canvas2'
 // document.body.appendChild( renderer.domElement );
 
 // -- camera ---------------------------------------------------------------------------------------
-const camera = new THREE.PerspectiveCamera( 30.0, width / height, 0.01, 20.0 );
-camera.position.set( 0.0, 0.0, 3.0 );
-
+const camera = new THREE.PerspectiveCamera( 15.0, width / height, 0.01, 10.0 );
 // -- scene ----------------------------------------------------------------------------------------
 const scene = new THREE.Scene();
 scene.background = new THREE.Color( 0xffffff );
@@ -93,15 +91,15 @@ function update() {
 update();
 
 // -- mouse ----------------------------------------------------------------------------------------
-renderer.domElement.addEventListener( 'mousemove', ( event ) => { // マウスイベントの取得
-  if ( currentVRM ) { // もしcurrentVRMがあれば
-    const x = event.clientX / renderer.domElement.clientWidth; // マウスのx位置、正規化されている
-    currentVRM.blendShapeProxy.setValue( THREE.VRMSchema.BlendShapePresetName.Fun, x ); // マウスのx位置を表情に反映
+// renderer.domElement.addEventListener( 'mousemove', ( event ) => { // マウスイベントの取得
+//   if ( currentVRM ) { // もしcurrentVRMがあれば
+//     const x = event.clientX / renderer.domElement.clientWidth; // マウスのx位置、正規化されている
+//     currentVRM.blendShapeProxy.setValue( THREE.VRMSchema.BlendShapePresetName.Fun, x ); // マウスのx位置を表情に反映
 
-    const y = event.clientY / renderer.domElement.clientHeight; // マウスのy位置、正規化されている
-    currentVRM.blendShapeProxy.setValue( THREE.VRMSchema.BlendShapePresetName.Sorrow, y ); // マウスのy位置を表情に反映
-  }
-} );
+//     const y = event.clientY / renderer.domElement.clientHeight; // マウスのy位置、正規化されている
+//     currentVRM.blendShapeProxy.setValue( THREE.VRMSchema.BlendShapePresetName.Sorrow, y ); // マウスのy位置を表情に反映
+//   }
+// } );
 
 // -- face recognition -----------------------------------------------------------------------------
 const jeelizCanvas = document.createElement( 'canvas' ); // jeeliz用のキャンバスを生成

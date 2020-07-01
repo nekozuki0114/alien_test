@@ -83,3 +83,7 @@
 .meguruboxBase > .megururight {
   transform:translateX(150px) rotateY(90deg);
 }
+
+#video {                  /* カメラ映像を流す video について */
+  transform: scaleX(-1);  /* 左右反転させる */
+}
