@@ -1,35 +1,17 @@
-<script src="./test.js"></script>
+<video id="player" autoplay></video>
+ <script>
+ let handleSuccess = function(stream) {
+    // カメラストリームをプレイヤーのデータに設定
+    player.srcObject = stream;
+  };
 
-<script>
-const scene = new THREE.Scene();
-
-const loader = new THREE.GLTFLoader();
-loader.load(
-
-	// URL of the VRM you want to load
-	'/models/shino.vrm',
-
-	// called when the resource is loaded
-	( gltf ) => {
-
-		// generate a VRM instance from gltf
-		THREE.VRM.from( gltf ).then( ( vrm ) => {
-
-			// add the loaded vrm to the scene
-			scene.add( vrm.scene );
-
-			// deal with vrm features
-			console.log( vrm );
-
-		} );
-
-	},
-
-	// called while loading is progressing
-	( progress ) => console.log( 'Loading model...', 100.0 * ( progress.loaded / progress.total ), '%' ),
-
-	// called when loading has errors
-	( error ) => console.error( error )
-
-);
-</script>
+  // このメソッドを呼び出すことでユーザーにブラウザがカメラを使用することを許可するかの確認ダイアログが表示され、
+  // 許可されれば handleSuccess が呼ばれる
+  navigator.mediaDevices.getUserMedia({
+    video: {facingMode: "environment", width: width, height: height},
+    audio: false
+  }).then(handleSuccess)
+  .catch(err => {
+	  console.log(JSON.stringify(err));
+  });
+  </script>

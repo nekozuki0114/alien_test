@@ -9,7 +9,7 @@ const app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static('public'));
 app.use(cors());
-app.get('/', (req, res) => res.sendFile(__dirname + "/index.html"));
+app.get('/', (req, res) => res.sendFile(__dirname + "/test.html"));
 
 
 //サーバを立てる
