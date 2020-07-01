@@ -34,13 +34,14 @@ const Peer = window.Peer;
   const localStream = await navigator.mediaDevices
     .getUserMedia({
       audio: true,
-      video: true,
+      video: { facingMode: 'user' },
     })
     .catch(console.error);
 
-  // Render local stream
-  localVideo.muted = true;
+  // Render local stream 
   localVideo.srcObject = localStream;
+  localVideo.muted = true;
+  localVideo.autoplay = true;
   localVideo.playsInline = true;
   await localVideo.play().catch(console.error);
 
