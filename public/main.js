@@ -8,7 +8,7 @@ const height = 300;
 // -- renderer -------------------------------------------------------------------------------------
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( width, height );
-let element =document.getElementById('container').appendChild( renderer.domElement );
+let element = document.getElementById('container').appendChild( renderer.domElement );
 element.id = 'canvas2'
 // document.body.appendChild( renderer.domElement );
 

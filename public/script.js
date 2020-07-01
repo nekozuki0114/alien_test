@@ -12,7 +12,11 @@ const Peer = window.Peer;
   const messages = document.getElementById('js-messages');
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
-
+  let canvas = null;
+  while(canvas == null){
+  canvas = document.getElementById("canvas2").captureStream();
+  console.log("est");
+  }
   meta.innerText = `
     UA: ${navigator.userAgent}
     SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
