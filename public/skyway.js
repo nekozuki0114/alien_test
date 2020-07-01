@@ -82,7 +82,7 @@ const Peer = window.Peer;
       // mark peerId to find it later at peerLeave event
       newVideo.setAttribute('data-peer-id', stream.peerId);
       remoteVideos.append(newVideo);
-      await newVideo.play().catch(console.error());
+      await newVideo.play().catch(alert(console.error()));
     });
 
     room.on('data', ({ data, src }) => {
