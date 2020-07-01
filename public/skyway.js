@@ -13,12 +13,10 @@ const Peer = window.Peer;
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
   let canvas = null;
-  let localStream = null;
   while(canvas == null){
   canvas = document.getElementById("canvas2").captureStream();
   console.log("est");
   }
-
   meta.innerText = `
     UA: ${navigator.userAgent}
     SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
@@ -33,23 +31,18 @@ const Peer = window.Peer;
   );
   
   // カメラ映像取得
-if (navigator.mediaDevices) {
-  navigator.mediaDevices.getUserMedia({video: {facingMode: "user"}, audio: true})
-    .then( stream => {
-    // 成功時にvideo要素にカメラ映像をセットし、再生
-    const videoElm = document.getElementById('stream');
-    videoElm.srcObject = stream;
-    videoElm.play()
-    // 着信時に相手にカメラ映像を返せるように、グローバル変数に保存しておく
-    localStream = stream;
-  }).catch( error => {
-    // 失敗時にはエラーログを出力
-    console.error('mediaDevice.getUserMedia() error:', error);
-    return;
-  });
-} else {
-  alert('ビデオカメラを使用できません');
-}
+  const localStream = await navigator.mediaDevices
+    .getUserMedia({
+      audio: true,
+      video: true,
+    })
+    .catch(console.error);
+
+  // Render local stream
+  localVideo.muted = true;
+  localVideo.srcObject = localStream;
+  localVideo.playsInline = true;
+  await localVideo.play().catch(console.error);
 
 
   // eslint-disable-next-line require-atomic-updates
@@ -65,6 +58,7 @@ if (navigator.mediaDevices) {
     if (!peer.open) {
       return;
     }
+
 
     const room = peer.joinRoom(roomId.value, {
       mode: getRoomModeByHash(),
