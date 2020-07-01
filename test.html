@@ -1,8 +1,6 @@
 <video id="player" autoplay></video>
  <script>
 let player = document.getElementById('player');
-let width = snapshotCanvas.width;
-let height = snapshotCanvas.height;
  let handleSuccess = function(stream) {
     // カメラストリームをプレイヤーのデータに設定
     player.srcObject = stream;
@@ -11,7 +9,7 @@ let height = snapshotCanvas.height;
   // このメソッドを呼び出すことでユーザーにブラウザがカメラを使用することを許可するかの確認ダイアログが表示され、
   // 許可されれば handleSuccess が呼ばれる
   navigator.mediaDevices.getUserMedia({
-    video: {facingMode: "environment", width: width, height: height},
+    video: {facingMode: "environment"},
     audio: false
   }).then(handleSuccess)
   .catch(err => {
