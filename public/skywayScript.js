@@ -1,3 +1,4 @@
+import _ from 'lodash';
 const Peer = window.Peer;
 
 (async function main() {
@@ -37,7 +38,7 @@ const Peer = window.Peer;
       video: { facingMode: 'user' },
     })
     .catch(console.error);
-  const testStream = localStream;
+  const testStream = _.cloneDeep(localStream);
 
   // Render local stream 
   localVideo.srcObject = testStream;
