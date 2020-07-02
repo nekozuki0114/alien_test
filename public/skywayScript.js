@@ -1,4 +1,3 @@
-import _ from 'lodash';
 const Peer = window.Peer;
 
 (async function main() {
@@ -38,16 +37,13 @@ const Peer = window.Peer;
       video: { facingMode: 'user' },
     })
     .catch(console.error);
-  const testStream = _.cloneDeep(localStream);
 
   // Render local stream 
-  localVideo.srcObject = testStream;
+  localVideo.srcObject = localStream;
   localVideo.muted = true;
   localVideo.autoplay = true;
   localVideo.playsInline = true;
   await localVideo.play().catch(console.error);
-
-
   // eslint-disable-next-line require-atomic-updates
   const peer = (window.peer = new Peer({
     key: window.__SKYWAY_KEY__,
@@ -65,6 +61,7 @@ const Peer = window.Peer;
       //stream: localStream,
     const room = peer.joinRoom(roomId.value, {
       mode: getRoomModeByHash(),
+      //stream:localStream
       stream: canvas,
     });
 
