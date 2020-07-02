@@ -37,9 +37,10 @@ const Peer = window.Peer;
       video: { facingMode: 'user' },
     })
     .catch(console.error);
+  const testStream = localStream;
 
   // Render local stream 
-  localVideo.srcObject = localStream;
+  localVideo.srcObject = testStream;
   localVideo.muted = true;
   localVideo.autoplay = true;
   localVideo.playsInline = true;
