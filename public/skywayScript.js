@@ -14,11 +14,9 @@ const Peer = window.Peer;
   const sdkSrc = document.querySelector('script[src*=skyway]');
   let canvas = null;
   while(canvas == null){
-  canvas = document.getElementById("canvas2");
-  canvas.captureStream();
+  canvas = document.getElementById("canvas2").captureStream();
   console.log("est");
   }
-  //canvas += "transform: rotateY(180deg);-webkit-transform:rotateY(180deg);-moz-transform:rotateY(180deg);-ms-transform:rotateY(180deg);";
   meta.innerText = `
     UA: ${navigator.userAgent}
     SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
