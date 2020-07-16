@@ -7,16 +7,6 @@
   <title>SkyWayチュートリアル</title>
 </head>
 <body>
-    <!-- <div id='megurucube'>
-        <div class='meguruboxBase'>
-            <div class='megurusquare megurutop'> <div class= 'megurusquare2'></div> </div>
-            <div class='megurusquare megurubottom'> <div class= 'megurusquare2'></div> </div>
-            <div class='megurusquare megurufront'> <div class= 'megurusquare2'></div> </div>
-            <div class='megurusquare meguruback'> <div class= 'megurusquare2'></div> </div>
-            <div class='megurusquare meguruleft'> <div class= 'megurusquare2'></div> </div>
-            <div class='megurusquare megururight'> <div class= 'megurusquare2'></div> </div>
-        </div>
-    </div> -->
     <div class="container">
         <h1 class="heading">Room example</h1>
         <p class="note">
@@ -26,7 +16,7 @@
         <div class="room">
           <div>
             <div id="container">  <!-- video の上に canvas をオーバーレイするための div 要素 -->
-            <video id="stream" style="transform: scaleX(-1); width: 400px; height: 300px;"></video>
+            <video id="stream" style="width: 400px; height: 300px;"></video>
             </div>
             <span id="js-room-mode"></span>:
             <input type="text" placeholder="Room Name" id="js-room-id">
@@ -46,14 +36,7 @@
       </div>
 </body>
 
-<!-- clmtrackr 関連ファイルの読み込み -->
-<!-- clmtrackr のメインライブラリの読み込み -->
-<!-- <script src="face/clmtrackr.js"></script>
-<script src="face/model_pca_20_svm_emotion.js"></script>
-<script src="face/emotionClassifier.js"></script>
-<script src="face/emotionModel.js"></script>
-<script src="./face.js"></script> -->
-
+<!-- threevrm関連 -->
 <script src="https://unpkg.com/three@0.108"></script>
 <script src="https://unpkg.com/three@0.108/examples/js/loaders/GLTFLoader.js"></script>
 <script src="https://unpkg.com/@pixiv/three-vrm@0.1/lib/three-vrm.js"></script>
